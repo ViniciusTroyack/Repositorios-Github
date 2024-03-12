@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from '../../services/api'
-import { Container, Owner, Loading, BackButton, IssuesList, PageAction } from "./styles";
+import { Container, Owner, Loading, BackButton, IssuesList, PageAction, FilterList } from "./styles";
 import {FaArrowLeft} from 'react-icons/fa'
 
 export default function Repositorio() {
@@ -11,6 +11,12 @@ export default function Repositorio() {
     const [issues, setIssues] = useState([])
     const [loading, setLoading] = useState(true)
     const [page, setPage] = useState(1);
+    const [filter, setFilters] = useState([
+        {state: 'all', label: 'Todas', active: true},
+        {state: 'open', label: 'Abertas', active: false},
+        {state: 'closed', label: 'Fechadas', active: false}
+    ])
+    const [filterIndex, setFilterIndex] = useState(0)
 
     useEffect(() => {
 
@@ -19,7 +25,7 @@ export default function Repositorio() {
                 api.get(`repos/${repositorio}`),
                 api.get(`repos/${repositorio}/issues`, {
                     params: {
-                        state: 'open',
+                        state: filter[filterIndex].state,
                         page: page,
                         per_page: 5,
                     }
@@ -33,12 +39,15 @@ export default function Repositorio() {
 
         load();
 
-    }, [repositorio, page])
+    }, [repositorio, page, filterIndex, filter])
 
     function handlePage(action){
         setPage(action === 'back' ? page -1 : page + 1)
     }
 
+    function handleFilter(index){
+        setFilterIndex(index)
+    }
 
     if(loading){
         return(
@@ -63,6 +72,16 @@ export default function Repositorio() {
                 <p>{repositorioInfo.description}</p>
             </Owner>
 
+            <FilterList active={filterIndex}>
+                {filter.map((filter, index)=> (
+                    <button type="button"
+                    key={filter.label}
+                    onClick={()=> handleFilter(index)}>
+                        {filter.label}
+                    </button>
+                ))}
+            </FilterList>
+
             <IssuesList>
                 {issues.map(issue => (
                     <li key={String(issue.id)}>
@@ -71,12 +90,12 @@ export default function Repositorio() {
                         <div>
                             <strong>
                                 <a href={issue.html_url}>{issue.title}</a><br/>
-                                <p>Labels:</p>
+                                <p>Etiquetas:</p>
                                 {issue.labels.map(label => (
                                     <span key={String(label.id)}>{label.name}</span>
                                 ))}
                             </strong>
-                            <p>{issue.user.login}</p>
+                            <p>Criador: {issue.user.login}</p>
                         </div>
                     </li>
                 ))}
