@@ -101,7 +101,7 @@ export const IssuesList = styled.ul`
         font-size: 12px;
         font-weight: 600;
         padding: 4px 7px;
-        margin-left: 10px;
+        margin: 1px 2px;
         display: inline-block;
       }
     }
@@ -136,7 +136,7 @@ export const FilterList = styled.div`
 
   button {
     outline: 0;
-    width: 6rem;
+    width: 5rem;
     border: 0;
     padding: 8px;
     border-radius: 20px;
