@@ -24,7 +24,7 @@ export default function Main() {
   useEffect(() => {
     const repoStorage = JSON.parse(localStorage.getItem("repos"));
 
-    if (repoStorage.length > 0) {
+    if (repoStorage) {
       setRepositorios(repoStorage);
     }
   }, []);
@@ -116,7 +116,7 @@ export default function Main() {
           )}
         </SubmitButton>
       </Form>
-      <ReposContainer hasRepo={repositorios.length}>
+      <ReposContainer hasrepo={repositorios.length}>
         <List>
           {repositorios.map((repo) => (
             <li key={repo.name}>

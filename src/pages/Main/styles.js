@@ -23,7 +23,7 @@ export const Title = styled.h1`
 `;
 
 export const ReposContainer = styled.div`
-  display: ${(props) => (props.hasRepo ? "block" : "none")};
+  display: ${(props) => (props.hasrepo ? "block" : "none")};
   width: 100%;
   max-width: 44rem;
   min-width: 300px;
