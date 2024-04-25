@@ -74,6 +74,7 @@ export const IssuesList = styled.ul`
     div {
       flex: 1;
       margin-left: 12px;
+      overflow-wrap: anywhere;
 
       P {
         margin-top: 10px;
@@ -82,7 +83,7 @@ export const IssuesList = styled.ul`
     }
 
     strong {
-      font-size: 15px;
+      font-size: 1rem;
 
       a {
         text-decoration: none;

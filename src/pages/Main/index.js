@@ -24,7 +24,7 @@ export default function Main() {
   useEffect(() => {
     const repoStorage = JSON.parse(localStorage.getItem("repos"));
 
-    if (repoStorage) {
+    if (repoStorage && repoStorage.length > 0) {
       setRepositorios(repoStorage);
     }
   }, []);
@@ -45,7 +45,9 @@ export default function Main() {
             throw new Error("Você precisa indicar um repositorio!");
           }
 
-          const response = await api.get(`repos/${newRepoUser}/${newRepo}`);
+          const response = await api.get(
+            `repos/${newRepoUser.trim()}/${newRepo.trim()}`
+          );
 
           const hasRepo = repositorios.find((repo) => repo.name === newRepo);
 
